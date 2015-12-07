@@ -8,6 +8,8 @@
 
 #include <iostream> // allows us to do input/output
 #include <string> // if we want to use strings, we actually need to import it! unlike java
+#include <cstdlib> // allows us to generate random numbers
+#include <ctime> // allows us to work w/ time
 
 using namespace std; // !!! this line lets us used shortened forms of the commands. Forget std::cout, just use cout.
 
@@ -15,13 +17,14 @@ int hi; // we have a global variable here
 
 // we can declare functions before we define them, so we can define them anywhere;
 // "function prototype"
-void chapter2(), chapter3(), chapter4(), chapter5(), chapter7();
+void chapter2(), chapter3(), chapter4(), chapter5(), chapter7(), chapter8(), chapter10(), chapter11(), chapter12();
 
 
 // our main function, which returns an integer
 // it isn't necessary to have any arguments for it to still be our main function
 int main(int argc, const char * argv[]) {
-    chapter7();
+    chapter11();
+
     // cin.get(); // program waits for you to press a key before exiting, essentially C get input
 
     // In C++, you need to have your main function return something.
@@ -29,7 +32,146 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
-void chapter7() {}
+void chapter12() {
+    // intro to pointers
+}
+
+struct Person {
+    string name;
+    int age;
+    double height;
+
+    Person() {
+        cout << "hello" << endl;
+    }
+};
+
+// A copy of the structure's value is made. The actual structure isn't passed in, so we return the structure to get
+// the changed version
+Person makeOlder(Person person) {
+    if (person.age > 150) return person;
+    person.age++;
+    return person;
+}
+
+void chapter11() {
+    Person me;
+    me.name = "Chelsea";
+    me.age = 18;
+    me.height = 162.56;
+
+    cout << "Before my birtday, I was " << me.age << endl;
+    cout << "After my birthday, I'm " <<  makeOlder(me).age << endl;
+}
+
+// for multi-dimensional arrays, you need to specify all sizes except for the 1st one
+void changeThisArray(string array[][10], int firstSize);
+
+// for single-dimensional arrays, you don't need to specify a size
+void changeThisArray(string array[], int arraySize) {
+    for (int i = 0; i < arraySize; i++)
+        cout << array[i] + "." << endl;
+}
+
+void chapter10() {
+    // array declarations:
+    // type name[capacity]
+    int array[10];
+
+    // accessing an array:
+    array[3] = 10;
+    cout << array[3] << endl;
+
+    // 2-dimensional array
+    string strings[10];
+    strings[0] = "hi";
+
+    cout << strings[0] << endl;
+
+    changeThisArray(strings, 10);
+}
+
+int randRange(int low, int high) {
+    // random number b/t 0 & the number of values in the range + the lowest possible value
+    // add 1 to high - low b/c 10-0 has 11 possible values, adding 1 gives us the total values in the range, not just
+    // the difference
+    return rand() % (high - low + 1) + low;
+}
+
+int randRange(int high) {
+    return rand() % (high);
+}
+
+void chapter8() {
+    // just call srand() once, at the very beginning
+    // the current time is usually used as the seed for the random numbers
+    // we're using an unsigned integer here because we always want it to be positive
+    // unsigned integers are 2x as high in magnitude than signed integers, since the left-most bit,
+    // which typically indicates positive or negative can be used to store a 1
+
+    // range of int: –2,147,483,648 to 2,147,483,647
+    // range of unsigned int: 0 to 4,294,967,295
+    srand((unsigned int) time(NULL));
+
+    cout << rand() << endl;
+    cout << randRange(500) << endl;
+    cout << randRange(100, 500) << endl;
+}
+
+void chapter7() {
+    // We've created a custom variable type, Color, which has a
+    // fixed ("enumerated") list of values
+
+    // Each value is prefixed with a capital C in case the name is
+    // used in another enum
+    enum Color {
+        C_RED = 1,
+        C_ORANGE = 2,
+        C_YELLOW = 3,
+        C_GREEN = 4,
+        C_BLUE = 5,
+        C_INDIGO = 6,
+        C_VIOLET = 7
+    };
+
+    // if we don't assign values, it'll assign them integers starting from 0
+    enum Color2 {
+        C2_RED,
+        C2_ORANGE,
+        C2_YELLOW,
+        C2_GREEN,
+        C2_BLUE,
+        C2_INDIGO,
+        C2_VIOLET
+    };
+
+    Color primaryColor = C_RED;
+
+    // we can be sure that we're using all values that primaryColor could take on, since it is an enum
+    switch (primaryColor) {
+        case C_RED:
+            primaryColor = C_ORANGE;
+            cout << primaryColor << endl;
+        case C_ORANGE:
+            primaryColor = C_YELLOW;
+            cout << primaryColor << endl;
+        case C_YELLOW:
+            primaryColor = C_GREEN;
+            cout << primaryColor << endl;
+        case C_GREEN:
+            primaryColor = C_BLUE;
+            cout << primaryColor << endl;
+        case C_BLUE:
+            primaryColor = C_INDIGO;
+            cout << primaryColor << endl;
+        case C_INDIGO:
+            primaryColor = C_VIOLET;
+        case C_VIOLET:
+            cout << primaryColor << endl;
+            cout << "and we're out of this switch statement~" << endl;
+            break;
+    }
+}
 
 void chapter5() {
     // do-while loops are ended w/ a semicolon
@@ -154,4 +296,3 @@ void chapter2() {
     cout << "Yay for namespaces." << endl;
     cout << endl << "Yay for namespaces." << endl << "with your second line here";
 }
-
