@@ -17,13 +17,13 @@ int hi; // we have a global variable here
 
 // we can declare functions before we define them, so we can define them anywhere;
 // "function prototype"
-void chapter2(), chapter3(), chapter4(), chapter5(), chapter7(), chapter8(), chapter10(), chapter11(), chapter12();
+void chapter2(), chapter3(), chapter4(), chapter5(), chapter7(), chapter8(), chapter10(), chapter11(), chapter13();
 
 
 // our main function, which returns an integer
 // it isn't necessary to have any arguments for it to still be our main function
 int main(int argc, const char * argv[]) {
-    chapter11();
+    chapter13();
 
     // cin.get(); // program waits for you to press a key before exiting, essentially C get input
 
@@ -32,8 +32,17 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
-void chapter12() {
-    // intro to pointers
+void chapter13() {
+    // using pointers
+    int x = 5;
+    int *p_x = & x;
+    // memory address of x
+    cout << p_x << endl;
+    // value stored in x
+    cout << *p_x;
+    // change value stored at memory address
+    *p_x = 7;
+    cout << endl << "now it is " << *p_x << endl;
 }
 
 struct Person {
